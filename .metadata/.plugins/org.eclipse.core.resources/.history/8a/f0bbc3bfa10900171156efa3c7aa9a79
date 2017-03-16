@@ -1,0 +1,9 @@
+package Server;
+
+public class SecretKey {
+
+	public static void main(String[] args) {
+		createKey();
+	}
+
+}

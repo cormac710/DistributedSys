@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<files name="Threads">
+
+    <file name="../WebContent/WEB-INF/web.xml"/> 
+    
+	<file name="../src/myApp/Book.java"/>
+	<file name="../src/myApp/BookDao.java"/>
+	<file name="../src/myApp/BookResource.java"/>
+	
+	<file name="../doc/readme.txt"/> 
+	<file name="../WebContent/createBook.html"/> 
+	
+	<file name="../src/client/Client1GET.java"/>
+	<file name="../src/client/Client2POST.java"/>
+	<file name="../src/client/Client3DELETE.java"/>
+	<file name="../src/client/Client4PUT.java"/>
+
+</files>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bookstore>
+    <books>
+        <book>
+            <id>1</id>
+            <author>Bill Burke</author>
+            <title>RESTful Java with JAX-RS</title>
+            <year>2009</year>
+        </book>
+        <book>
+            <id>2</id>
+            <author> David A Chappell, Richard Monson-Haefel</author>
+            <title>Java Message Service</title>
+            <year>2000</year>
+        </book>
+    </books>
+    <name>AIT Bookstore</name>
+    <location>AIT</location>
+</bookstore>

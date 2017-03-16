@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kb-project>
+ <depends-on-projects/>
+ <used-by-projects/>
+ <paths>
+  <path value="C:/apache-tomcat-8.0.38/lib/jsp-api.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/websocket-api.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/el-api.jar"/>
+  <path value="C:/Users/a00237795/DistributedSystems/AssignmentLaptops/lib/jersey-bundle-1.15.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jersey-bundle-1.15.jar-1/meta-inf/taglib.tld" project="AssignmentLaptops"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-api.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/catalina-ant.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/jasper-el.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/annotations-api.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/catalina-storeconfig.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-i18n-ja.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/servlet-api.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-i18n-es.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-util-scan.jar"/>
+  <path value="C:/Users/a00237795/DistributedSystems/AssignmentLaptops/WebContent/WEB-INF/lib/asm-3.3.1.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/catalina.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-i18n-fr.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/catalina-tribes.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/catalina-ha.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/jasper.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-coyote.jar"/>
+  <path value="C:/Users/a00237795/DistributedSystems/AssignmentLaptops/WebContent/WEB-INF/lib/jersey-bundle-1.15.jar">
+   <libraries>
+    <library class="tld">
+     <id class="model-object"
+      path="FileSystems/lib-jersey-bundle-1.15.jar/meta-inf/taglib.tld" project="AssignmentLaptops"/>
+    </library>
+   </libraries>
+  </path>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-websocket.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-jdbc.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/ecj-4.5.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-util.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-dbcp.jar"/>
+  <path value="C:/apache-tomcat-8.0.38/lib/tomcat-jni.jar"/>
+ </paths>
+ <validation>
+  <el>
+   <linked-el length="30" name="%0" offset="912" path="%1"/>
+   <linked-el length="19" name="%2" offset="993" path="%1"/>
+   <linked-el length="27" name="%3" offset="1691" path="%1"/>
+   <linked-el length="28" name="%3" offset="1946" path="%1"/>
+   <linked-el length="42" name="%4" offset="790" path="%1"/>
+   <linked-el length="27" name="%4" offset="1691" path="%1"/>
+   <linked-el length="28" name="%4" offset="1946" path="%1"/>
+   <linked-el length="23" name="%4" offset="1992" path="%1"/>
+   <linked-el length="13" name="%5" offset="1180" path="%1"/>
+   <linked-el length="24" name="%5" offset="314" path="%1"/>
+   <linked-el length="23" name="%6" offset="1992" path="%1"/>
+   <linked-el length="27" name="%7" offset="1660" path="%1"/>
+   <linked-el length="13" name="%8" offset="374" path="%1"/>
+   <linked-el length="34" name="%8" offset="710" path="%1"/>
+   <linked-el length="17" name="%8" offset="255" path="%1"/>
+   <linked-el length="42" name="%9" offset="790" path="%1"/>
+   <linked-el length="42" name="%10" offset="790" path="%1"/>
+   <linked-el length="19" name="%11" offset="993" path="%1"/>
+   <linked-el length="19" name="%12" offset="993" path="%1"/>
+   <linked-el length="13" name="%13" offset="1180" path="%1"/>
+   <linked-el length="24" name="%13" offset="314" path="%1"/>
+   <linked-el length="27" name="%14" offset="1660" path="%1"/>
+   <linked-el length="30" name="%15" offset="912" path="%1"/>
+   <linked-el length="12" name="%16" offset="2086" path="%1"/>
+   <linked-el length="13" name="%16" offset="1522" path="%1"/>
+   <linked-el length="13" name="%16" offset="1452" path="%1"/>
+   <linked-el length="27" name="%16" offset="1691" path="%1"/>
+   <linked-el length="28" name="%16" offset="1946" path="%1"/>
+   <linked-el length="12" name="%17" offset="2086" path="%1"/>
+   <linked-el length="13" name="%17" offset="1522" path="%1"/>
+   <linked-el length="13" name="%17" offset="1452" path="%1"/>
+   <linked-el length="27" name="%17" offset="1691" path="%1"/>
+   <linked-el length="28" name="%17" offset="1946" path="%1"/>
+   <linked-el length="27" name="%18" offset="1660" path="%1"/>
+   <linked-el length="29" name="%19" offset="1628" path="%1"/>
+   <linked-el length="29" name="%20" offset="1628" path="%1"/>
+   <linked-el length="27" name="%21" offset="1660" path="%1"/>
+   <linked-el length="13" name="%22" offset="374" path="%1"/>
+   <linked-el length="34" name="%22" offset="710" path="%1"/>
+   <linked-el length="17" name="%22" offset="255" path="%1"/>
+  </el>
+ </validation>
+ <aliases>
+  <alias path="xsl.dir" value="%0"/>
+  <alias path="saxon.lib.dir" value="%2"/>
+  <alias path="slides.file" value="%3"/>
+  <alias path="slides" value="%4"/>
+  <alias path="lib" value="%5"/>
+  <alias path="slides.stylesheet" value="%6"/>
+  <alias path="src" value="%7"/>
+  <alias path="f2s" value="%8"/>
+  <alias path="/AssignmentLaptops/slides/build.xml" value="%1"/>
+  <alias path="docBook" value="%9"/>
+  <alias path="slides.dir" value="%10"/>
+  <alias path="saxon.lib" value="%11"/>
+  <alias path="saxon" value="%12"/>
+  <alias path="lib.dir" value="%13"/>
+  <alias path="input.file" value="%14"/>
+  <alias path="xsl" value="%15"/>
+  <alias path="gen.dir" value="%16"/>
+  <alias path="gen" value="%17"/>
+  <alias path="input" value="%18"/>
+  <alias path="files2slides" value="%19"/>
+  <alias path="files2slides.stylesheet" value="%20"/>
+  <alias path="src.dir" value="%21"/>
+  <alias path="f2s.dir" value="%22"/>
+ </aliases>
+ <includes/>
+ <uris/>
+</kb-project>

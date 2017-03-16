@@ -1,0 +1,13 @@
+17:39:35.273 ERROR [Scheduler-Worker-0] - org.exolab.jms.server.ClientDisconnectionException: Failed in onMessage java.rmi.UnmarshalException: Error unmarshaling return header; nested exception is: 
+	java.net.SocketException: Connection reset
+org.exolab.jms.server.ClientDisconnectionException: Failed in onMessage java.rmi.UnmarshalException: Error unmarshaling return header; nested exception is: 
+	java.net.SocketException: Connection reset
+	at org.exolab.jms.server.rmi.RmiJmsServerSession.onMessage(RmiJmsServerSession.java:572)
+	at org.exolab.jms.server.JmsServerSession.onMessage(JmsServerSession.java:942)
+	at org.exolab.jms.messagemgr.QueueConsumerEndpoint.deliverMessages(QueueConsumerEndpoint.java:177)
+	at org.exolab.jms.messagemgr.ConsumerEndpoint.run(ConsumerEndpoint.java:425)
+	at org.exolab.core.threadPool.ThreadPoolWorker.runIt(ThreadPoolWorker.java:191)
+	at org.exolab.core.threadPool.ThreadPoolWorker.runWork(ThreadPoolWorker.java:178)
+	at org.exolab.core.threadPool.ThreadPoolWorker.access$000(ThreadPoolWorker.java:67)
+	at org.exolab.core.threadPool.ThreadPoolWorker$1.run(ThreadPoolWorker.java:122)
+	at java.lang.Thread.run(Thread.java:745)

@@ -1,0 +1,12 @@
+package lab8;
+
+import java.io.FileInputStream;
+
+public class C1Show {
+	String keystoreFilename = "keyStore";
+	char[] password = "file".toCharArray();
+	String alias = "cormac";
+	
+	
+
+}

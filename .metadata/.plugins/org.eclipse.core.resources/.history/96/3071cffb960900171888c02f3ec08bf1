@@ -1,0 +1,136 @@
+package Server;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public enum LaptopDao {
+	instance;
+
+	private Map<Integer, Laptop> laptopsDb = new HashMap<Integer, Laptop>();
+	Connection connection;
+	PreparedStatement ps;
+	ResultSet rs;
+	Laptop laptop;
+	Statement stmt;
+
+	private Connection getConnection() {
+		Connection conn = null;
+		String url = "jdbc:mysql://localhost:3307/laptopsrest";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, "root", "admin");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+
+	private LaptopDao() {
+		Laptop laptop = new Laptop();
+		laptop.setId(1);
+		laptop.setMake("Lenovo");
+		laptop.setModel("G50");
+		laptop.setRam(4);
+		laptop.setPrice(750);
+		laptop.setProcessor("Intel i3");
+
+		laptopsDb.put(1, laptop);
+
+		laptop = new Laptop();
+		laptop.setId(2);
+		laptop.setMake("HP");
+		laptop.setModel("Pavillion");
+		laptop.setRam(8);
+		laptop.setPrice(820);
+		laptop.setProcessor("Intel i5");
+
+		laptopsDb.put(2, laptop);
+	}
+
+	public List<Laptop> getAllLaptop() {
+		List<Laptop> laptops = new ArrayList<Laptop>();
+		// laptops.addAll(laptopsDb.values());
+		Connection conn = getConnection();
+		try {
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM laptop;";
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				laptop = new Laptop();
+				laptop.setId(rs.getInt("id"));
+				laptop.setMake(rs.getString("make"));
+				laptop.setModel(rs.getString("model"));
+				laptop.setPrice(rs.getInt("price"));
+				laptop.setRam(rs.getInt("ram"));
+				laptop.setProcessor(rs.getString("processor"));
+				laptops.add(laptop);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("Problem Retrieving all Laptops");
+			e.printStackTrace();
+			return null;
+		}
+		return laptops;
+	}
+
+	public Laptop getLaptop(int id) throws SQLException {
+		Connection conn = getConnection();
+		try {
+			stmt = conn.createStatement();
+			laptop = new Laptop();
+			String sql = "SELECT * FROM laptop where id = " + id + ";";
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				laptop.setId(rs.getInt("id"));
+				laptop.setMake(rs.getString("make"));
+				laptop.setModel(rs.getString("model"));
+				laptop.setPrice(rs.getInt("price"));
+				laptop.setRam(rs.getInt("ram"));
+				laptop.setProcessor(rs.getString("processor"));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("Problem Retrieving Laptop with id " + id);
+			e.printStackTrace();
+			return null;
+		}
+		return laptop;
+	}
+
+	public void create(Laptop laptop) {
+		Connection conn = getConnection();
+		try {
+			ps = conn.prepareStatement(
+					"INSERT INTO laptop (id, make, model, price, ram, processor) VALUES (?,?, ?, ?, ?, ?)");
+			ps.setInt(1, laptop.getId());
+			ps.setString(2, laptop.getMake());
+			ps.setString(3, laptop.getModel());
+			ps.setInt(4, laptop.getPrice());
+			ps.setInt(5, laptop.getRam());
+			ps.setString(6, laptop.getProcessor());
+			ps.executeUpdate();
+			conn.close();
+			System.out.println("Inserted " + laptop.getMake());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void delete(int id) {
+		if (laptopsDb.remove(id) != null) {
+			System.out.println("Deleted");
+		} else {
+			System.out.println("Not Deleted");
+		}
+	}
+
+}

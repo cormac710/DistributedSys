@@ -1,0 +1,87 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>../src/myApp/BookResource.java</title><link type="text/css" rel="stylesheet" href="../dbhtml/browser/slides-w3c.css"></link><link rel="contents" href="toc.html" title=""></link><link rel="top" href="index.html" title=""></link><link rel="first" href="index.html" title=""></link><link rel="up" href="index.html" title=""></link><link rel="previous" href="foil03.html" title="../src/myApp/BookDao.java"></link><link rel="next" href="foil05.html" title="../doc/readme.txt"></link><link rel="last" href="foil10.html" title="../src/client/Client4PUT.java"></link><script language="JavaScript1.2" type="text/javascript"> </script><script type="text/javascript" language="javascript" src="../dbhtml/browser/ua.js"> </script><script type="text/javascript" language="JavaScript" src="../dbhtml/browser/xbDOM.js"> </script><script type="text/javascript" language="javascript" src="../dbhtml/browser/xbStyle.js"> </script><script type="text/javascript" language="javascript" src="../dbhtml/browser/xbCollapsibleLists.js"> </script><script type="text/javascript" language="JavaScript" src="../dbhtml/browser/slides.js"> </script></head><body class="foil" bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF" onkeypress="navigate(event)"><div class="foil"><a id="d0e22"></a><div class="navhead"><table class="navbar" cellspacing="0" cellpadding="0" border="0" width="97%" summary="Navigation buttons"><tr><td align="left" valign="top"></td><td valign="top" nowrap="nowrap" width="150"><div align="right"><a rel="previous" accesskey="P" href="foil03.html"><img border="0" width="32" height="32" alt=" Previous" title="../src/myApp/BookDao.java" src="../dbhtml/graphics/active/w3c-prev.png"></img></a><a rel="contents" href="toc.html" accesskey="C"><img border="0" width="32" height="32" alt=" Contents" title="Table of Contents" src="../dbhtml/graphics/active/w3c-toc.png"></img></a><a rel="next" accesskey="N" href="foil05.html"><img border="0" width="32" height="32" alt=" Next" title="../doc/readme.txt" src="../dbhtml/graphics/active/w3c-next.png"></img></a></div></td></tr></table><h1 class="title">../src/myApp/BookResource.java</h1><hr class="top-nav-sep"></hr></div><div class="foil-body"><pre xmlns="" class="programlisting">package myApp;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+
+@Path("/books")
+public class BookResource {
+	// This method is called if XMLis request
+	@GET
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON,
+			MediaType.TEXT_XML })
+	public List&lt;Book&gt; getBooks() {
+		return BookDao.instance.getBooks();
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON,
+			MediaType.TEXT_XML })
+	@Path("{bookId}")
+	public Book getBook(@PathParam("bookId") String id) {
+		return BookDao.instance.getBook(Integer.parseInt(id));
+	}
+
+	@POST
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public void postBook(@FormParam("id") String id,
+			@FormParam("title") String title, 
+			@FormParam("author") String author,
+			@FormParam("year") String year,
+			@Context HttpServletResponse servletResponse) throws IOException {
+		System.out.println("Inside POST id = " + id);
+		System.out.println("title = " + title);
+
+		Book book = new Book();
+		book.setId(Integer.parseInt(id));
+		book.setTitle(title);
+		book.setAuthor(author);
+		book.setYear(Integer.parseInt(year));
+		BookDao.instance.create(book);
+
+		servletResponse.sendRedirect("../createBook.html");
+	}
+
+	@DELETE
+	@Produces(MediaType.TEXT_HTML)
+	@Path("{bookId}")
+	public void deleteBook(@PathParam("bookId") String id) throws IOException {
+		System.out.println("Delete id = " + id);
+
+		BookDao.instance.delete(Integer.parseInt(id));
+	}
+
+	@PUT
+	@Produces(MediaType.TEXT_HTML)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Path("{bookId}")
+	public void putBook(@PathParam("bookId") String id,
+			@FormParam("title") String title, @FormParam("author") String author,
+			@FormParam("year") String year,
+			@Context HttpServletResponse servletResponse) throws IOException {
+		System.out.println("PUT id = " + id);
+
+		Book book = new Book();
+		book.setId(Integer.parseInt(id));
+		book.setTitle(title);
+		book.setAuthor(author);
+		book.setYear(Integer.parseInt(year));
+		BookDao.instance.create(book);
+	}
+}</pre></div><div id="overlayDiv"><div class="navfoot"><hr class="bottom-nav-sep"></hr><table class="footer" cellspacing="0" cellpadding="0" border="0" width="97%" summary="footer"><tr><td align="left" valign="top"></td><td align="right" valign="top"><span class="index">4 of 10</span></td><td valign="top" nowrap="nowrap" width="150"><div align="right"><a rel="previous" accesskey="P" href="foil03.html"><img border="0" width="32" height="32" alt=" Previous" title="../src/myApp/BookDao.java" src="../dbhtml/graphics/active/w3c-prev.png"></img></a><a rel="next" accesskey="N" href="foil05.html"><img border="0" width="32" height="32" alt=" Next" title="../doc/readme.txt" src="../dbhtml/graphics/active/w3c-next.png"></img></a></div></td></tr></table></div></div></div></body></html>

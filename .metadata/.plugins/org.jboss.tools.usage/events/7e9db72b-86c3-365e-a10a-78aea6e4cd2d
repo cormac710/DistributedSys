@@ -1,0 +1,11 @@
+#Wed Mar 15 16:39:20 GMT 2017
+vl=How many times the 'Finish' button pressed during the day
+l=Wizard class name
+ct=jbt
+d=1489595960892
+c=0
+cmp=usage
+a=finishWizard
+cl=net.sourceforge.keytool.plugin.wizards.newcertificate.NewCertificateWizard
+v=2.1.1
+s=2

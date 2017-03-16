@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<module>
+    <modules>
+        <module>
+            <name>DS</name>
+            <lecturer>PJ</lecturer>
+            <hours>4</hours>
+        </module>
+        <module>
+            <name>Java</name>
+            <lecturer>SK</lecturer>
+            <hours>6</hours>
+        </module>
+    </modules>
+    <level>9</level>
+    <name>MASE</name>
+</module>

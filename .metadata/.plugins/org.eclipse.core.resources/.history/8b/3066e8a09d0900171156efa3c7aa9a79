@@ -1,0 +1,21 @@
+package lab8;
+
+import java.io.FileInputStream;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+
+public class C1Show {
+	public static void main(String[] args) {
+		String keystoreFilename = "keyStore";
+		char[] password = "file".toCharArray();
+		String alias = "cormac";
+		
+		FileInputStream fIn = new
+				FileInputStream(keystoreFilename);
+				KeyStore keystore = KeyStore.getInstance("JKS");
+				keystore.load(fIn, password);
+				Certificate cert = keystore.getCertificate(alias);
+				System.out.println(cert);
+	}
+
+}

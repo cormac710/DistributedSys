@@ -1,0 +1,11 @@
+#Wed Mar 15 12:51:44 GMT 2017
+vl=0 \= failed, 1 \= successful
+l=Server Runtime ID
+ct=server
+d=1489582304162
+c=0
+cmp=server
+a=new
+cl=org.jboss.ide.eclipse.as.71
+v=3.1.1
+s=0

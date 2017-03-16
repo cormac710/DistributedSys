@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?><?dbhtml 
+			graphics-dir="../dbhtml/graphics" 
+			css-stylesheet-dir="../dbhtml/browser"
+			script-dir="../dbhtml/browser"
+		?>
+<slides>
+   <slidesinfo>
+      <title/>
+   </slidesinfo>
+   <foil>
+      <title>../WebContent/WEB-INF/web.xml</title>
+      <programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0"&gt;
+  &lt;context-param&gt;
+    &lt;param-name&gt;resteasy.scan&lt;/param-name&gt;
+    &lt;param-value&gt;true&lt;/param-value&gt;
+  &lt;/context-param&gt;
+  &lt;context-param&gt;
+    &lt;param-name&gt;resteasy.servlet.mapping.prefix&lt;/param-name&gt;
+    &lt;param-value&gt;/rest&lt;/param-value&gt;
+  &lt;/context-param&gt;
+  &lt;listener&gt;
+    &lt;listener-class&gt;
+			org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap&lt;/listener-class&gt;
+  &lt;/listener&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Resteasy&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher&lt;/servlet-class&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Resteasy&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</programlisting>
+   </foil>
+   <foil>
+      <title>../src/myApp/Book.java</title>
+      <programlisting>package myApp;&#xD;
+&#xD;
+import javax.xml.bind.annotation.XmlRootElement;&#xD;
+import javax.xml.bind.annotation.XmlType;&#xD;
+&#xD;
+@XmlRootElement(name = "book")&#xD;
+// Optional&#xD;
+@XmlType(propOrder = { "id", "author", "title", "year" })&#xD;
+public class Book {&#xD;
+&#xD;
+    private int id;&#xD;
+    private String title;&#xD;
+    private String author;&#xD;
+    private int year;&#xD;
+&#xD;
+    public String getTitle() {&#xD;
+        return title;&#xD;
+    }&#xD;
+&#xD;
+    public void setTitle(String title) {&#xD;
+        this.title = title;&#xD;
+    }&#xD;
+&#xD;
+    public int getId() {&#xD;
+        return id;&#xD;
+    }&#xD;
+&#xD;
+    public void setId(int id) {&#xD;
+        this.id = id;&#xD;
+    }&#xD;
+&#xD;
+    public String getAuthor() {&#xD;
+        return author;&#xD;
+    }&#xD;
+&#xD;
+    public void setAuthor(String author) {&#xD;
+        this.author = author;&#xD;
+    }&#xD;
+&#xD;
+    public int getYear() {&#xD;
+        return year;&#xD;
+    }&#xD;
+&#xD;
+    public void setYear(int year) {&#xD;
+        this.year = year;&#xD;
+    }&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../src/myApp/BookDao.java</title>
+      <programlisting>package myApp;&#xD;
+&#xD;
+import java.util.ArrayList;&#xD;
+import java.util.HashMap;&#xD;
+import java.util.List;&#xD;
+import java.util.Map;&#xD;
+&#xD;
+&#xD;
+public enum BookDao {&#xD;
+  instance;&#xD;
+&#xD;
+  private Map&lt;Integer, Book&gt; booksMap = new HashMap&lt;Integer, Book&gt;();&#xD;
+&#xD;
+  private BookDao() {&#xD;
+&#xD;
+    Book book1 = new Book();&#xD;
+    book1.setId(1);&#xD;
+    book1.setTitle("RESTful Java with JAX-RS");&#xD;
+    book1.setAuthor("Bill Burke");&#xD;
+    book1.setYear(2009);&#xD;
+&#xD;
+    booksMap.put(1, book1);&#xD;
+&#xD;
+    Book book2 = new Book();&#xD;
+    book2.setId(2);&#xD;
+    book2.setTitle("Java Message Service");&#xD;
+    book2.setAuthor(" David A Chappell, Richard Monson-Haefel");&#xD;
+    book2.setYear(2000);&#xD;
+&#xD;
+    booksMap.put(2, book2);&#xD;
+  }&#xD;
+&#xD;
+  public List&lt;Book&gt; getBooks() {&#xD;
+    List&lt;Book&gt; books = new ArrayList&lt;Book&gt;();&#xD;
+    books.addAll(booksMap.values());&#xD;
+    return books;&#xD;
+  }&#xD;
+&#xD;
+  public Book getBook(int id) {&#xD;
+    return booksMap.get(id);&#xD;
+  }&#xD;
+&#xD;
+  public void create(Book book) {&#xD;
+    booksMap.put(book.getId(), book);&#xD;
+  }&#xD;
+&#xD;
+  public void delete(int id) {&#xD;
+    if (booksMap.remove(id) != null) {&#xD;
+      System.out.println("Removed");&#xD;
+    } else {&#xD;
+      System.out.println("Not Removed");&#xD;
+    }&#xD;
+  }&#xD;
+&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../src/myApp/BookResource.java</title>
+      <programlisting>package myApp;&#xD;
+&#xD;
+import java.io.IOException;&#xD;
+import java.util.List;&#xD;
+&#xD;
+import javax.servlet.http.HttpServletResponse;&#xD;
+import javax.ws.rs.Consumes;&#xD;
+import javax.ws.rs.DELETE;&#xD;
+import javax.ws.rs.FormParam;&#xD;
+import javax.ws.rs.GET;&#xD;
+import javax.ws.rs.POST;&#xD;
+import javax.ws.rs.PUT;&#xD;
+import javax.ws.rs.Path;&#xD;
+import javax.ws.rs.PathParam;&#xD;
+import javax.ws.rs.Produces;&#xD;
+import javax.ws.rs.core.Context;&#xD;
+import javax.ws.rs.core.MediaType;&#xD;
+&#xD;
+@Path("/books")&#xD;
+public class BookResource {&#xD;
+	// This method is called if XMLis request&#xD;
+	@GET&#xD;
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON,&#xD;
+			MediaType.TEXT_XML })&#xD;
+	public List&lt;Book&gt; getBooks() {&#xD;
+		return BookDao.instance.getBooks();&#xD;
+	}&#xD;
+&#xD;
+	@GET&#xD;
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON,&#xD;
+			MediaType.TEXT_XML })&#xD;
+	@Path("{bookId}")&#xD;
+	public Book getBook(@PathParam("bookId") String id) {&#xD;
+		return BookDao.instance.getBook(Integer.parseInt(id));&#xD;
+	}&#xD;
+&#xD;
+	@POST&#xD;
+	@Produces(MediaType.TEXT_HTML)&#xD;
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)&#xD;
+	public void postBook(@FormParam("id") String id,&#xD;
+			@FormParam("title") String title, &#xD;
+			@FormParam("author") String author,&#xD;
+			@FormParam("year") String year,&#xD;
+			@Context HttpServletResponse servletResponse) throws IOException {&#xD;
+		System.out.println("Inside POST id = " + id);&#xD;
+		System.out.println("title = " + title);&#xD;
+&#xD;
+		Book book = new Book();&#xD;
+		book.setId(Integer.parseInt(id));&#xD;
+		book.setTitle(title);&#xD;
+		book.setAuthor(author);&#xD;
+		book.setYear(Integer.parseInt(year));&#xD;
+		BookDao.instance.create(book);&#xD;
+&#xD;
+		servletResponse.sendRedirect("../createBook.html");&#xD;
+	}&#xD;
+&#xD;
+	@DELETE&#xD;
+	@Produces(MediaType.TEXT_HTML)&#xD;
+	@Path("{bookId}")&#xD;
+	public void deleteBook(@PathParam("bookId") String id) throws IOException {&#xD;
+		System.out.println("Delete id = " + id);&#xD;
+&#xD;
+		BookDao.instance.delete(Integer.parseInt(id));&#xD;
+	}&#xD;
+&#xD;
+	@PUT&#xD;
+	@Produces(MediaType.TEXT_HTML)&#xD;
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)&#xD;
+	@Path("{bookId}")&#xD;
+	public void putBook(@PathParam("bookId") String id,&#xD;
+			@FormParam("title") String title, @FormParam("author") String author,&#xD;
+			@FormParam("year") String year,&#xD;
+			@Context HttpServletResponse servletResponse) throws IOException {&#xD;
+		System.out.println("PUT id = " + id);&#xD;
+&#xD;
+		Book book = new Book();&#xD;
+		book.setId(Integer.parseInt(id));&#xD;
+		book.setTitle(title);&#xD;
+		book.setAuthor(author);&#xD;
+		book.setYear(Integer.parseInt(year));&#xD;
+		BookDao.instance.create(book);&#xD;
+	}&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../doc/readme.txt</title>
+      <programlisting>jersey-bundle-1.15.jar on build path&#xD;
+&#xD;
+jersey-bundle-1.15.jar&#xD;
+asm-3.3.1.jar&#xD;
+in WebContent/WEB-INF/lib&#xD;
+&#xD;
+GET&#xD;
+http://localhost:8080/j6booksCrudServer/rest/books&#xD;
+http://localhost:8080/j6booksCrudServer/rest/books/1&#xD;
+http://localhost:8080/j6booksCrudServer/rest/books/2&#xD;
+&#xD;
+POST&#xD;
+http://localhost:8080/j6booksCrudServer/createBooks.html</programlisting>
+   </foil>
+   <foil>
+      <title>../WebContent/createBook.html</title>
+      <programlisting>&lt;!DOCTYPE html&gt;&#xD;
+&lt;html&gt;&#xD;
+&lt;head&gt;&#xD;
+&lt;title&gt;Form to create a new resource&lt;/title&gt;&#xD;
+&lt;/head&gt;&#xD;
+&lt;body&gt;&#xD;
+	&lt;form action="rest/books" method="POST"&gt;&#xD;
+		&lt;label for="id"&gt;ID&lt;/label&gt;&#xD;
+		&lt;input name="id" /&gt;&#xD;
+		&lt;br /&gt;&#xD;
+&#xD;
+		&lt;label for="name"&gt;Name&lt;/label&gt;&#xD;
+		&lt;input name="name" /&gt;&#xD;
+		&lt;br /&gt;&#xD;
+&#xD;
+		&lt;label for="author"&gt;Author&lt;/label&gt;&#xD;
+		&lt;input name="author" /&gt;&#xD;
+		&lt;br /&gt;&#xD;
+&#xD;
+		&lt;label for="year"&gt;Year&lt;/label&gt;&#xD;
+		&lt;input name="year" /&gt;&#xD;
+		&lt;br /&gt;&#xD;
+&#xD;
+		&lt;input type="submit" value="Submit" /&gt;&#xD;
+	&lt;/form&gt;&#xD;
+&lt;/body&gt;&#xD;
+&lt;/html&gt;</programlisting>
+   </foil>
+   <foil>
+      <title>../src/client/Client1GET.java</title>
+      <programlisting>package client;&#xD;
+&#xD;
+&#xD;
+&#xD;
+import java.net.URI;&#xD;
+&#xD;
+import javax.ws.rs.core.MediaType;&#xD;
+import javax.ws.rs.core.UriBuilder;&#xD;
+&#xD;
+import com.sun.jersey.api.client.Client;&#xD;
+import com.sun.jersey.api.client.ClientResponse;&#xD;
+import com.sun.jersey.api.client.WebResource;&#xD;
+import com.sun.jersey.api.client.config.ClientConfig;&#xD;
+import com.sun.jersey.api.client.config.DefaultClientConfig;&#xD;
+import com.sun.jersey.api.representation.Form;&#xD;
+&#xD;
+public class Client1GET {&#xD;
+&#xD;
+  public static void main(String[] args) {&#xD;
+    ClientConfig config = new DefaultClientConfig();&#xD;
+    Client client = Client.create(config);&#xD;
+    WebResource service = client.resource(getBaseURI());&#xD;
+&#xD;
+    // GET&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.TEXT_XML).get(String.class));&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_JSON).get(String.class));&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books").path("1")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books").path("2")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+  }&#xD;
+&#xD;
+  private static URI getBaseURI() {&#xD;
+    return UriBuilder.fromUri("http://localhost:8080/j6booksCrudServer")&#xD;
+        .build();&#xD;
+  }&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../src/client/Client2POST.java</title>
+      <programlisting>package client;&#xD;
+&#xD;
+&#xD;
+&#xD;
+import java.net.URI;&#xD;
+&#xD;
+import javax.ws.rs.core.MediaType;&#xD;
+import javax.ws.rs.core.UriBuilder;&#xD;
+&#xD;
+import com.sun.jersey.api.client.Client;&#xD;
+import com.sun.jersey.api.client.ClientResponse;&#xD;
+import com.sun.jersey.api.client.WebResource;&#xD;
+import com.sun.jersey.api.client.config.ClientConfig;&#xD;
+import com.sun.jersey.api.client.config.DefaultClientConfig;&#xD;
+import com.sun.jersey.api.representation.Form;&#xD;
+&#xD;
+public class Client2POST {&#xD;
+&#xD;
+  public static void main(String[] args) {&#xD;
+    ClientConfig config = new DefaultClientConfig();&#xD;
+    Client client = Client.create(config);&#xD;
+    WebResource service = client.resource(getBaseURI());&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+    // POST&#xD;
+    Form form = new Form();&#xD;
+    form.add("id", "13");&#xD;
+    form.add("name", "Unlucky Book");&#xD;
+    form.add("author", "Unlucky");&#xD;
+    form.add("year", "2013");&#xD;
+    service.path("rest").path("books")&#xD;
+        .type(MediaType.APPLICATION_FORM_URLENCODED)&#xD;
+        .post(ClientResponse.class, form);&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+  }&#xD;
+&#xD;
+  private static URI getBaseURI() {&#xD;
+    return UriBuilder.fromUri("http://localhost:8080/j6booksCrudServer")&#xD;
+        .build();&#xD;
+  }&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../src/client/Client3DELETE.java</title>
+      <programlisting>package client;&#xD;
+&#xD;
+&#xD;
+&#xD;
+import java.net.URI;&#xD;
+&#xD;
+import javax.ws.rs.core.MediaType;&#xD;
+import javax.ws.rs.core.UriBuilder;&#xD;
+&#xD;
+import com.sun.jersey.api.client.Client;&#xD;
+import com.sun.jersey.api.client.ClientResponse;&#xD;
+import com.sun.jersey.api.client.WebResource;&#xD;
+import com.sun.jersey.api.client.config.ClientConfig;&#xD;
+import com.sun.jersey.api.client.config.DefaultClientConfig;&#xD;
+import com.sun.jersey.api.representation.Form;&#xD;
+&#xD;
+public class Client3DELETE {&#xD;
+&#xD;
+  public static void main(String[] args) {&#xD;
+    ClientConfig config = new DefaultClientConfig();&#xD;
+    Client client = Client.create(config);&#xD;
+    WebResource service = client.resource(getBaseURI());&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+    // DELETE&#xD;
+    service.path("rest").path("books/13").delete();&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+  }&#xD;
+&#xD;
+  private static URI getBaseURI() {&#xD;
+    return UriBuilder.fromUri("http://localhost:8080/j6booksCrudServer")&#xD;
+        .build();&#xD;
+  }&#xD;
+}</programlisting>
+   </foil>
+   <foil>
+      <title>../src/client/Client4PUT.java</title>
+      <programlisting>package client;&#xD;
+&#xD;
+&#xD;
+import java.net.URI;&#xD;
+&#xD;
+import javax.ws.rs.core.MediaType;&#xD;
+import javax.ws.rs.core.UriBuilder;&#xD;
+&#xD;
+import com.sun.jersey.api.client.Client;&#xD;
+import com.sun.jersey.api.client.ClientResponse;&#xD;
+import com.sun.jersey.api.client.WebResource;&#xD;
+import com.sun.jersey.api.client.config.ClientConfig;&#xD;
+import com.sun.jersey.api.client.config.DefaultClientConfig;&#xD;
+import com.sun.jersey.api.representation.Form;&#xD;
+&#xD;
+public class Client4PUT {&#xD;
+&#xD;
+  public static void main(String[] args) {&#xD;
+    ClientConfig config = new DefaultClientConfig();&#xD;
+    Client client = Client.create(config);&#xD;
+    WebResource service = client.resource(getBaseURI());&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+&#xD;
+    // PUT&#xD;
+    Form form = new Form();&#xD;
+    form.add("name", "Lucky Book");&#xD;
+    form.add("author", "Lucky");&#xD;
+    form.add("year", "2026");&#xD;
+    service.path("rest").path("books").path("26")&#xD;
+        .type(MediaType.APPLICATION_FORM_URLENCODED)&#xD;
+        .put(ClientResponse.class, form);&#xD;
+&#xD;
+    System.out.println(service.path("rest").path("books")&#xD;
+        .accept(MediaType.APPLICATION_XML).get(String.class));&#xD;
+  }&#xD;
+&#xD;
+  private static URI getBaseURI() {&#xD;
+    return UriBuilder.fromUri("http://localhost:8080/j6booksCrudServer")&#xD;
+        .build();&#xD;
+  }&#xD;
+}</programlisting>
+   </foil>
+</slides>

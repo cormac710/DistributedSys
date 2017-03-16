@@ -1,0 +1,12 @@
+1488379625102	Rename local variable 'book1'
+1488379783283	Rename field 'booksMap'
+1488380188524	Rename type 'BookDao'
+1488380228156	Rename local variable 'book'
+1488380271541	Rename type 'BookResource'
+1488381984875	Rename resource 'createBook.html'
+1488385135885	Delete element
+1488385807521	Copy compilation units
+1488387904159	Rename package 'Server'
+1488387952960	Rename package 'myApp'
+1488388984660	Copy file
+1488388987990	Delete element

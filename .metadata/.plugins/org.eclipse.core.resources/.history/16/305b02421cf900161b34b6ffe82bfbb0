@@ -1,0 +1,11 @@
+import java.security.MessageDigest;
+
+public class Q1 {
+
+	public static void main(String[] args) {
+		String password = "12345";
+		MessageDigest algorithm = null;
+
+	}
+
+}
